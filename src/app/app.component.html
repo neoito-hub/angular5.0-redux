@@ -1,3 +1,16 @@
 <button (click)="leftMessage()">LEFT</button>
 <button (click)="rightMessage()">RIGHT</button>
 <h1>{{displayMessage$ | async }}</h1>
+
+<div *ngIf="post | async as p">
+  Title: {{p.title}}
+  <br>
+  Likes: {{p.likes}}
+<button (click)="upVote()">UP</button>
+<button (click)="downVote()">DOWN</button>
+<button (click)="reset()">RESET</button>
+
+<input [(ngModel)] = title>
+<button (click)="editTitle()">Change title</button>
+
+</div>
