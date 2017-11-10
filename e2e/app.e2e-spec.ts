@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('angular-redux-firebase App', () => {
+describe('angular-redux-test-repo App', () => {
   let page: AppPage;
 
   beforeEach(() => {
