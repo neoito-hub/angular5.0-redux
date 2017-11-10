@@ -16,3 +16,153 @@ So after running the code your app scafhold will generate and does the npm insta
 ```
 npm i --save @ngrx/store
 ```
+### Import StoreModule in app.module metadata
+- Create post.reducer.ts in app/reducers/post.reducer.ts
+  ```
+  import { PostReducer } from './reducers/post.reducer';
+  ```
+- Add to imports in @NgModule
+  ```
+  StoreModule.forRoot({post: PostReducer})
+  ```
+### Create a model for your data
+- Create app/models/post.model.ts and add ther interface.
+  ```
+  export interface Post {
+    title: string;
+    likes: number;
+  }
+  ```
+### Define actions
+- Create app/actions/post.actions.ts
+- Import Action from store
+  ```
+  import { Action } from '@ngrx/store';
+  ```
+- Export constants that represents each action
+  ```
+  export const EDIT_TITLE = '[Post] Edit'
+  export const UPVOTE = '[Post] Upvote'
+  export const DOWNVOTE = '[Post] Downvote'
+  export const RESET = '[Post] Reset'
+  ```
+- Create EditText class with readonly type
+  ```
+  export class EditTitle implements Action {
+    readonly type = EDIT_TITLE;
+    constructor (public payload: string){}
+  }
+  ```
+- Do the same for all remaining actions
+  ```
+  export class UpVote implements Action {
+    readonly type = UPVOTE;
+  }
+  export class DownVote implements Action {
+    readonly type = DOWNVOTE;
+  }
+  export class Reset implements Action {
+    readonly type = RESET;
+  }
+  ```
+- Export all
+```
+export type All = EditTitle | UPVOTE | DOWNVOTE | RESET;
+```
+### Create post reducer
+- Create app/reducers/post.reducers.ts
+- Import Post actions and model
+```
+import { PostActions } from './actions/post.actions.ts';
+import { Post } from './models/post.model.ts';
+
+export type Action = PostActions.All;
+```
+- Then create inital state
+
+```
+const initialState: Post = {
+    title: 'Angular redux',
+    likes: 0
+}
+```
+- Create helper function for new state object.
+```
+const newState = (state, newData) => {
+  return Object.assign({}, state, newData);
+}
+```
+- Define reducer function
+
+```
+export function postReducer(state:Post = initialState, action: Action ) {
+  switch (action.type) {
+    case PostActions.EDIT_TITLE: {
+        return newState(state, {title: action.payload});
+    }
+    case PostActions.UPVOTE: {
+        return newState(state, {likes: action.likes + 1});
+    }
+    case PostActions.DOWNVOTE: {
+        return newState(state, {likes: action.likes - 1});
+    }
+    case PostActions.RESET: {
+        return intialState;
+    }
+    default: {
+      return state;
+    }
+  }
+}
+```
+### Refactor App Component
+- Import store and Observable
+```
+import { Store } from @ngrx/store;
+import { Observable } from 'rxjs/Observable';
+
+import { Post } from './models/post.model.ts';
+import { PostActions } from './actions/post.actions.ts';
+```
+- Create interface
+```
+interface AppState:{
+  post: Post;
+}
+```
+- Create properties and methods
+```
+posts$: Observable<AppState>;
+title: string;
+
+constructor(private store: Store<AppState>){
+  this.post = this.store.select('post');
+}
+editTitle(){
+  this.store.dispatch(new PostActions.EditTitle(this.title));
+}
+upVote(){
+  this.store.dispatch(new PostActions.UpVote());
+}
+downVote(){
+  this.store.dispatch(new PostActions.DownVote());
+}
+reset(){
+  this.store.dispatch(new PostActions.Reset());
+}
+```
+### Modify template
+```
+<div *ngIf="post | async as p">
+  Title: {{p.title}}
+  <br>
+  Likes: {{p.likes}}
+<button (click)="upVote()">UP</button>
+<button (click)="downVote()">DOWN</button>
+<button (click)="reset()">RESET</button>
+
+<input [(ngModel)] = title>
+<button (click)="editTitle()">Change title</button>
+
+</div>
+```
