@@ -96,19 +96,19 @@ const newState = (state, newData) => {
 - Define reducer function
 
 ```
-export function postReducer(state:Post = initialState, action: Action ) {
+export function postReducer(state: Post = initialState, action: Action ) {
   switch (action.type) {
     case PostActions.EDIT_TITLE: {
         return newState(state, {title: action.payload});
     }
     case PostActions.UPVOTE: {
-        return newState(state, {likes: action.likes + 1});
+        return newState(state, {likes: state.likes + 1});
     }
     case PostActions.DOWNVOTE: {
-        return newState(state, {likes: action.likes - 1});
+        return newState(state, {likes: state.likes - 1});
     }
     case PostActions.RESET: {
-        return intialState;
+        return initialState;
     }
     default: {
       return state;
@@ -119,15 +119,16 @@ export function postReducer(state:Post = initialState, action: Action ) {
 ### Refactor App Component
 - Import store and Observable
 ```
-import { Store } from @ngrx/store;
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { Post } from './models/post.model.ts';
-import { PostActions } from './actions/post.actions.ts';
+import { Post } from './models/post.model';
+import * as PostActions from './actions/post.actions';
+
 ```
 - Create interface
 ```
-interface AppState:{
+interface AppState {
   post: Post;
 }
 ```
@@ -166,4 +167,11 @@ reset(){
 <button (click)="editTitle()">Change title</button>
 
 </div>
+```
+### Lets add some style
+- Import milligram css in index.html
+```
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+<link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+<link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
 ```
