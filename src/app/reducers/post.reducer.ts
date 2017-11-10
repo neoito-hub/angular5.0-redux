@@ -5,7 +5,7 @@ export type Action = PostActions.All;
 
 const initialState: Post = {
   title: 'Angular redux',
-  likes: 0
+  stars: 0
 };
 const newState = (state, newData) => {
   return Object.assign({}, state, newData);
@@ -18,10 +18,10 @@ export function postReducer(state: Post = initialState, action: Action ) {
         return newState(state, {title: action.payload});
     }
     case PostActions.UPVOTE: {
-        return newState(state, {likes: state.likes + 1});
+        return newState(state, {stars: state.stars + 1});
     }
     case PostActions.DOWNVOTE: {
-        return newState(state, {likes: state.likes - 1});
+        return newState(state, {stars: state.stars - 1});
     }
     case PostActions.RESET: {
         return initialState;

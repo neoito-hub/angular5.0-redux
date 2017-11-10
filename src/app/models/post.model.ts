@@ -1,4 +1,4 @@
 export interface Post {
   title: string;
-  likes: number;
+  stars: number;
 }
