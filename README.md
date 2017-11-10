@@ -19,6 +19,7 @@ npm i --save @ngrx/store
 ### Import StoreModule in app.module metadata
 - Create post.reducer.ts in app/reducers/post.reducer.ts
   ```
+  import { StoreModule } from '@ngrx/store';
   import { PostReducer } from './reducers/post.reducer';
   ```
 - Add to imports in @NgModule
