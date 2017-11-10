@@ -11,7 +11,10 @@ import { PostReducer } from './reducers/post.reducer';
   ],
   imports: [
     BrowserModule,
-    StoreModule.forRoot({displayMessage: AppReducer})
+    StoreModule.forRoot({
+      displayMessage: AppReducer,
+      post: PostReducer
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
