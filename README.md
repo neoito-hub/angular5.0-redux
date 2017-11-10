@@ -7,7 +7,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ### Create a new angular app.
 Create a new angular application using CLI.
 ```
-ng new angular-redux-firebase
+ng new angular-redux
 
 ```
 So after running the code your app scafhold will generate and does the npm install.
