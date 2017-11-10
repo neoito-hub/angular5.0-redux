@@ -42,12 +42,12 @@ npm i --save @ngrx/store
   ```
 - Export constants that represents each action
   ```
-  export const EDIT_TITLE = '[Post] Edit'
-  export const UPVOTE = '[Post] Upvote'
-  export const DOWNVOTE = '[Post] Downvote'
-  export const RESET = '[Post] Reset'
+  export const EDIT_TITLE = '[Post] Edit';
+  export const UPVOTE = '[Post] Upvote';
+  export const DOWNVOTE = '[Post] Downvote';
+  export const RESET = '[Post] Reset';
   ```
-- Create EditText class with readonly type
+- Create EditTitle class with readonly type
   ```
   export class EditTitle implements Action {
     readonly type = EDIT_TITLE;
@@ -68,14 +68,14 @@ npm i --save @ngrx/store
   ```
 - Export all
 ```
-export type All = EditTitle | UPVOTE | DOWNVOTE | RESET;
+export type All = EditTitle | UpVote | DownVote | Reset;
 ```
 ### Create post reducer
 - Create app/reducers/post.reducers.ts
 - Import Post actions and model
 ```
-import { PostActions } from './actions/post.actions.ts';
-import { Post } from './models/post.model.ts';
+import * as PostActions from './../actions/post.actions';
+import { Post } from './../models/post.model';
 
 export type Action = PostActions.All;
 ```
